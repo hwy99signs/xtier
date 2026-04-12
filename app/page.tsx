@@ -15,7 +15,7 @@ export default function HomePage() {
   return (
     <div className="hero-bg">
       {/* ─── Hero Section ─────────────────────────────────────────────────── */}
-      <section className="relative min-h-[90vh] flex items-center pt-20 overflow-hidden">
+      <section className="relative min-h-[90vh] flex items-center pt-32 lg:pt-40 pb-20 overflow-hidden">
         <div className="container-max px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="relative z-10 animate-fade-in-up">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-black/40 border border-[#D4AF37]/30 mb-8 blur-none backdrop-blur-sm">

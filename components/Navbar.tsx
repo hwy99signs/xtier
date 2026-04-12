@@ -30,13 +30,13 @@ export default function Navbar() {
   return (
     <nav
       className={cn(
-        'fixed top-0 left-0 right-0 z-50 transition-all duration-300 px-6 py-4',
-        scrolled ? 'nav-glass py-3' : 'bg-transparent'
+        'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
+        scrolled ? 'nav-glass py-3' : 'bg-transparent py-5'
       )}
     >
-      <div className="container-max flex items-center justify-between">
+      <div className="container-max flex items-center justify-between px-6">
         <Link href="/" className="flex items-center">
-          <Logo variant="full" className="h-10 md:h-12" />
+          <Logo variant="full" className="h-8 md:h-10 transition-all duration-300" />
         </Link>
 
         {/* Desktop Links */}
