@@ -283,3 +283,17 @@ model AdminSetting {
 
   @@map("admin_settings")
 }
+
+model AuditLog {
+  id           String   @id @default(cuid())
+  adminId      String?
+  adminName    String?
+  action       String   // e.g. "APPROVED_SUBSCRIBER", "UPDATED_PRICING"
+  targetEntity String?  // e.g. "Subscriber", "Driver"
+  targetId     String?
+  previousData Json?
+  newData      Json?
+  createdAt    DateTime @default(now())
+
+  @@map("audit_logs")
+}

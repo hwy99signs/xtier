@@ -470,3 +470,14 @@ select.input-field option {
   .section-padding { padding: 48px 16px; }
   .btn-gold, .btn-outline-gold { padding: 10px 20px; font-size: 0.8rem; }
 }
+
+/* ─── Dev Only Suppressions ───────────────────────────────────────────────── */
+[data-nextjs-toast="true"],
+#next-build-indicator,
+.nextjs-toast,
+nextjs-portal [data-nextjs-toast="true"] {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}

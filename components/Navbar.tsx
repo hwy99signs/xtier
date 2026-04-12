@@ -31,7 +31,7 @@ export default function Navbar() {
     <nav
       className={cn(
         'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
-        scrolled ? 'nav-glass py-3' : 'bg-transparent py-5'
+        scrolled ? 'nav-glass py-3' : 'bg-transparent py-6'
       )}
     >
       <div className="container-max flex items-center justify-between px-6">
@@ -46,7 +46,7 @@ export default function Navbar() {
               key={link.name}
               href={link.href}
               className={cn(
-                'text-sm font-medium tracking-wide transition-colors hover:text-[#D4AF37]',
+                'text-[15px] font-medium tracking-wide transition-colors hover:text-[#D4AF37]',
                 pathname === link.href ? 'text-[#D4AF37]' : 'text-[#A0A0A0]'
               )}
             >

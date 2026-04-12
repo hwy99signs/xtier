@@ -30,7 +30,7 @@ export default function Footer() {
              <Link href="/" className="mb-6 inline-block">
               <Logo variant="full" className="h-10" />
             </Link>
-            <p className="text-[#A0A0A0] text-sm leading-relaxed mb-8">
+             <p className="text-[#A0A0A0] text-base leading-relaxed mb-8">
               Premium executive transportation connecting Kingwood and George Bush Intercontinental Airport with elite service and reliability. Operated by ERANTT TRANSIT.
             </p>
             <div className="flex items-center gap-4">
@@ -49,25 +49,25 @@ export default function Footer() {
           <div>
             <h4 className="text-white font-display font-bold text-base mb-6 tracking-wide">QUICK LINKS</h4>
             <ul className="space-y-4">
-              <li><Link href="/" className="text-[#A0A0A0] text-sm hover:text-[#D4AF37] transition-colors">Home</Link></li>
-              <li><Link href="/subscribe" className="text-[#A0A0A0] text-sm hover:text-[#D4AF37] transition-colors">Subscribe Now</Link></li>
-              <li><Link href="/drivers" className="text-[#A0A0A0] text-sm hover:text-[#D4AF37] transition-colors">Drive With Us</Link></li>
-              <li><Link href="/terms" className="text-[#A0A0A0] text-sm hover:text-[#D4AF37] transition-colors">Terms of Service</Link></li>
+              <li><Link href="/" className="text-[#A0A0A0] text-[15px] hover:text-[#D4AF37] transition-colors">Home</Link></li>
+              <li><Link href="/subscribe" className="text-[#A0A0A0] text-[15px] hover:text-[#D4AF37] transition-colors">Subscribe Now</Link></li>
+              <li><Link href="/drivers" className="text-[#A0A0A0] text-[15px] hover:text-[#D4AF37] transition-colors">Drive With Us</Link></li>
+              <li><Link href="/terms" className="text-[#A0A0A0] text-[15px] hover:text-[#D4AF37] transition-colors">Terms of Service</Link></li>
             </ul>
           </div>
 
           <div>
             <h4 className="text-white font-display font-bold text-base mb-6 tracking-wide">CONTACT</h4>
             <ul className="space-y-4">
-              <li className="flex items-start gap-3 text-[#A0A0A0] text-sm">
+              <li className="flex items-start gap-3 text-[#A0A0A0] text-[15px]">
                 <MapPin className="text-[#D4AF37] shrink-0" size={18} />
                 <span>Kingwood, TX & IAH Airport Area</span>
               </li>
-              <li className="flex items-center gap-3 text-[#A0A0A0] text-sm">
+              <li className="flex items-center gap-3 text-[#A0A0A0] text-[15px]">
                 <Phone className="text-[#D4AF37] shrink-0" size={18} />
                 <span>(832) 555-ERANTT-TRANSIT</span>
               </li>
-              <li className="flex items-center gap-3 text-[#A0A0A0] text-sm">
+              <li className="flex items-center gap-3 text-[#A0A0A0] text-[15px]">
                 <Mail className="text-[#D4AF37] shrink-0" size={18} />
                 <span>service@erantt-transit.com</span>
               </li>
@@ -88,7 +88,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="pt-8 border-t border-[#222222] flex flex-col md:flex-row items-center justify-between gap-4 text-[#666666] text-xs">
+        <div className="pt-8 border-t border-[#222222] flex flex-col md:flex-row items-center justify-between gap-4 text-[#666666] text-sm">
           <p>© {new Date().getFullYear()} ERANTT TRANSIT Services LLC. All rights reserved.</p>
           <div className="flex items-center gap-6">
             <Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>

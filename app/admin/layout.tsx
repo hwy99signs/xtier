@@ -4,108 +4,116 @@ import {
   LayoutDashboard, 
   Users, 
   Car, 
-  Map, 
-  Settings, 
+  Route,
+  DollarSign,
+  CreditCard,
+  ClipboardList,
+  FileText,
+  Shield,
+  Settings,
   LogOut,
   Bell,
   Search,
-  ChevronDown
+  ListFilter
 } from 'lucide-react';
 import { Logo } from '@/components/Logo';
 import { auth, signOut } from '@/auth';
 import { redirect } from 'next/navigation';
 
-export default async function AdminLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+const sidebarLinks = [
+  { name: 'Dashboard',    icon: LayoutDashboard, href: '/admin/dashboard' },
+  { name: 'Subscribers',  icon: Users,            href: '/admin/subscribers' },
+  { name: 'Drivers',      icon: Car,              href: '/admin/drivers' },
+  { name: 'Routes',       icon: Route,            href: '/admin/routes' },
+  { name: 'Pricing',      icon: DollarSign,       href: '/admin/pricing' },
+  { name: 'Payments',     icon: CreditCard,       href: '/admin/payments' },
+  { name: 'Waitlist',     icon: ListFilter,       href: '/admin/waitlist' },
+  { name: 'Terms',        icon: FileText,         href: '/admin/terms' },
+  { name: 'Audit Logs',   icon: Shield,           href: '/admin/audit-logs' },
+  { name: 'Settings',     icon: Settings,         href: '/admin/settings' },
+];
+
+export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const session = await auth();
 
-  if (!session || session.user?.role !== 'ADMIN') {
+  if (!session || (session.user as any)?.role !== 'ADMIN') {
     redirect('/admin/login');
   }
 
   return (
     <div className="min-h-screen bg-[#050505] text-white flex">
-      {/* Sidebar */}
-      <aside className="w-64 border-r border-[#222222] bg-[#0A0A0A] flex flex-col fixed h-full z-30">
-        <div className="p-8">
+      {/* ── Sidebar ──────────────────────────────────────────────────── */}
+      <aside className="w-64 border-r border-[#1a1a1a] bg-[#080808] flex flex-col fixed h-full z-30">
+        {/* Logo */}
+        <div className="px-6 pt-8 pb-6 border-b border-[#1a1a1a]">
           <Link href="/admin/dashboard" className="flex items-center gap-3">
             <Logo variant="mark" className="h-8" />
-            <span className="font-display font-bold text-lg tracking-wider text-white">
-              ADMIN
-            </span>
+            <div>
+              <span className="font-display font-bold text-base tracking-wider text-white block">ERANTT</span>
+              <span className="text-[10px] text-[#D4AF37] font-bold tracking-[0.3em] uppercase">Admin Portal</span>
+            </div>
           </Link>
         </div>
 
-        <nav className="flex-1 px-4 py-4 space-y-2">
-          {[
-            { name: 'Dashboard', icon: <LayoutDashboard size={18} />, href: '/admin/dashboard' },
-            { name: 'Subscribers', icon: <Users size={18} />, href: '/admin/subscribers' },
-            { name: 'Drivers', icon: <Car size={18} />, href: '/admin/drivers' },
-            { name: 'Service Zones', icon: <Map size={18} />, href: '/admin/zones' },
-            { name: 'Pricing Rules', icon: <Settings size={18} />, href: '/admin/pricing' },
-          ].map((item) => (
+        {/* Nav */}
+        <nav className="flex-1 px-3 py-6 space-y-1 overflow-y-auto">
+          {sidebarLinks.map((item) => (
             <Link
               key={item.name}
               href={item.href}
-              className="flex items-center gap-3 px-4 py-3 text-sm font-medium text-[#A0A0A0] hover:text-[#D4AF37] hover:bg-[#D4AF37]/5 rounded-xl transition-all"
+              className="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-[#A0A0A0] hover:text-[#D4AF37] hover:bg-[#D4AF37]/5 rounded-xl transition-all group"
             >
-              <span className="text-inherit">{item.icon}</span>
+              <item.icon size={16} className="group-hover:text-[#D4AF37] transition-colors shrink-0" />
               {item.name}
             </Link>
           ))}
         </nav>
 
-        <div className="p-4 border-t border-[#222222]">
-          <form
-            action={async () => {
-              'use server';
-              await signOut({ redirectTo: '/admin/login' });
-            }}
-          >
-            <button className="flex items-center gap-3 px-4 py-3 text-sm font-medium text-error/70 hover:text-error hover:bg-error/5 rounded-xl transition-all w-full">
-              <LogOut size={18} />
+        {/* Logout */}
+        <div className="p-4 border-t border-[#1a1a1a]">
+          <form action={async () => { 'use server'; await signOut({ redirectTo: '/admin/login' }); }}>
+            <button className="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-[#EF4444]/60 hover:text-[#EF4444] hover:bg-[#EF4444]/5 rounded-xl transition-all w-full">
+              <LogOut size={16} />
               Logout Session
             </button>
           </form>
         </div>
       </aside>
 
-      {/* Main Content Area */}
+      {/* ── Main Content ─────────────────────────────────────────────── */}
       <div className="flex-1 ml-64 min-h-screen flex flex-col">
-        {/* Header */}
-        <header className="h-20 border-b border-[#222222] bg-[#0A0A0A]/50 backdrop-blur-md sticky top-0 z-20 px-10 flex items-center justify-between">
-          <div className="flex items-center gap-4 bg-black/40 border border-[#222222] px-4 py-2 rounded-xl w-96">
-            <Search className="text-[#666666]" size={16} />
-            <input 
-              type="text" 
-              placeholder="Search subscribers, drivers, or bookings..." 
-              className="bg-transparent border-none outline-none text-xs w-full"
+        {/* Topbar */}
+        <header className="h-16 border-b border-[#1a1a1a] bg-[#080808]/80 backdrop-blur-md sticky top-0 z-20 px-8 flex items-center justify-between">
+          <div className="flex items-center gap-3 bg-black/40 border border-[#1e1e1e] px-4 py-2 rounded-xl w-80">
+            <Search className="text-[#555555]" size={14} />
+            <input
+              type="text"
+              placeholder="Search subscribers, drivers..."
+              className="bg-transparent border-none outline-none text-xs w-full text-[#A0A0A0] placeholder:text-[#444444]"
             />
           </div>
 
-          <div className="flex items-center gap-6">
-            <button className="p-2 rounded-full border border-[#222222] text-[#A0A0A0] hover:text-[#D4AF37] transition-all relative">
-              <Bell size={18} />
-              <span className="absolute top-1 right-1 w-2 h-2 bg-error rounded-full border-2 border-[#0A0A0A]" />
+          <div className="flex items-center gap-5">
+            <button className="p-2 rounded-full border border-[#1e1e1e] text-[#666666] hover:text-[#D4AF37] transition-all relative">
+              <Bell size={16} />
+              <span className="absolute top-0.5 right-0.5 w-2 h-2 bg-[#EF4444] rounded-full border border-[#080808]" />
             </button>
-            
-            <div className="flex items-center gap-3 pl-6 border-l border-[#222222]">
-               <div className="text-right">
-                  <p className="text-sm font-bold text-white">{session?.user?.name}</p>
-                  <p className="text-[10px] text-[#D4AF37] uppercase tracking-widest font-black uppercase">Administrator</p>
-               </div>
-               <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#222222] to-[#111111] border border-[#333333] flex items-center justify-center">
-                  <Users className="text-[#666666]" size={20} />
-               </div>
+            <Link href="/" className="text-[10px] text-[#555555] hover:text-[#D4AF37] uppercase tracking-widest font-bold transition-colors">
+              Public Site ↗
+            </Link>
+            <div className="flex items-center gap-3 pl-5 border-l border-[#1e1e1e]">
+              <div className="text-right">
+                <p className="text-sm font-bold text-white leading-none">{session?.user?.name}</p>
+                <p className="text-[9px] text-[#D4AF37] uppercase tracking-[0.25em] font-black mt-0.5">Administrator</p>
+              </div>
+              <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[#D4AF37]/20 to-[#D4AF37]/5 border border-[#D4AF37]/20 flex items-center justify-center">
+                <Shield className="text-[#D4AF37]" size={16} />
+              </div>
             </div>
           </div>
         </header>
 
-        {/* Dashboard Content */}
-        <main className="flex-1 p-10">
+        <main className="flex-1 p-8">
           {children}
         </main>
       </div>

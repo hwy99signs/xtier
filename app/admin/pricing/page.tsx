@@ -1,5 +1,6 @@
 import React from 'react';
 import { prisma } from '@/lib/prisma';
+import { updatePricingRule } from '@/actions/admin';
 import { 
   Settings, 
   Plus, 
