@@ -11,7 +11,7 @@ import {
   ChevronRight,
   ShieldAlert
 } from 'lucide-react';
-import { cn, formatCurrency } from '@/lib/utils';
+import { cn, formatCurrency, formatDate } from '@/lib/utils';
 import Link from 'next/link';
 
 export default async function AdminPricingPage() {
@@ -27,9 +27,9 @@ export default async function AdminPricingPage() {
           <h1 className="text-3xl font-display font-bold">Revenue & Algorithms</h1>
           <p className="text-[#A0A0A0] text-sm mt-1">Configure base fares, mileage rates, and upfront commitment percentages.</p>
         </div>
-        <button className="btn-gold text-xs py-2.5 px-6 flex items-center gap-2">
+        <Link href="/admin/pricing/new" className="btn-gold text-xs py-2.5 px-6 flex items-center gap-2">
            <Plus size={16} /> New Pricing Rule
-        </button>
+        </Link>
       </div>
 
       <div className="grid grid-cols-1 gap-6">
@@ -83,16 +83,16 @@ export default async function AdminPricingPage() {
                         <p className="text-2xl font-display font-bold text-[#D4AF37]">{rule.commitmentPct}%</p>
                      </div>
                      <div className="text-right">
-                        <button className="text-[10px] font-bold text-[#666666] hover:text-[#D4AF37] flex items-center gap-1 justify-end ml-auto transition-all">
+                        <Link href={`/admin/pricing/${rule.id}`} className="text-[10px] font-bold text-[#666666] hover:text-[#D4AF37] flex items-center gap-1 justify-end ml-auto transition-all">
                            EDIT PARAMETERS <ChevronRight size={14} />
-                        </button>
+                        </Link>
                      </div>
                   </div>
                </div>
                
                <div className="bg-black/40 p-4 border-t border-[#222222] flex items-center justify-between text-[10px] text-[#444444] font-bold uppercase tracking-[0.2em]">
                   <div className="flex items-center gap-4">
-                     <span className="flex items-center gap-1"><Clock size={12} /> Effective From: {new Date(rule.effectiveFrom).toLocaleDateString()}</span>
+                     <span className="flex items-center gap-1"><Clock size={12} /> Effective From: {formatDate(rule.effectiveFrom)}</span>
                      <span className="flex items-center gap-1"><ShieldAlert size={12} /> Minimum Fare: {formatCurrency(rule.minFare)}</span>
                   </div>
                   <div className="flex items-center gap-2">

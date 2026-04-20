@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, X, ChevronRight } from 'lucide-react';
+import { Menu, X, LogIn } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Logo } from '@/components/Logo';
 
@@ -19,6 +19,13 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
 
+  // Hide the public navbar on all portal pages — they have their own headers
+  const isPortalPage =
+    pathname.startsWith('/dashboard') ||
+    pathname.startsWith('/drivers') ||
+    pathname.startsWith('/admin') ||
+    pathname === '/login';
+
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
@@ -26,6 +33,8 @@ export default function Navbar() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  if (isPortalPage) return null;
 
   return (
     <nav
@@ -53,8 +62,12 @@ export default function Navbar() {
               {link.name}
             </Link>
           ))}
-          <Link href="/admin/login" className="btn-outline-gold py-2 px-6 text-xs">
-            Admin Portal
+          <Link
+            href="/login"
+            id="nav-login-btn"
+            className="btn-gold py-2 px-6 text-xs flex items-center gap-2"
+          >
+            <LogIn size={14} /> Login
           </Link>
         </div>
 
@@ -89,11 +102,11 @@ export default function Navbar() {
           </Link>
         ))}
         <Link
-          href="/admin/login"
-          className="btn-gold mt-4"
+          href="/login"
+          className="btn-gold mt-4 flex items-center gap-2"
           onClick={() => setIsOpen(false)}
         >
-          Admin Portal
+          <LogIn size={16} /> Login
         </Link>
       </div>
     </nav>

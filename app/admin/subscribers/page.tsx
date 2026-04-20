@@ -1,9 +1,7 @@
 import React from 'react';
-import { prisma } from '@/lib/prisma';
 import { 
   Search, 
   Filter, 
-  MoreVertical, 
   MapPin, 
   Calendar,
   CheckCircle2,
@@ -13,15 +11,18 @@ import {
   Users
 } from 'lucide-react';
 import { cn, formatCurrency } from '@/lib/utils';
+import { prisma } from '@/lib/prisma';
 import Link from 'next/link';
 
 export default async function AdminSubscribersPage() {
   const subscribers = await prisma.subscriber.findMany({
     include: {
       user: true,
-      termsAcceptance: true,
+      zone: true,
     },
-    orderBy: { createdAt: 'desc' },
+    orderBy: {
+      createdAt: 'desc',
+    },
   });
 
   return (
@@ -95,14 +96,10 @@ export default async function AdminSubscribersPage() {
                     <StatusBadge status={sub.status} />
                   </td>
                   <td className="px-8 py-6 text-right">
-                    <div className="flex items-center justify-end gap-2">
-                       <button className="p-2 hover:bg-white/5 rounded-lg text-[#666666] hover:text-[#D4AF37] transition-all" title="Audit Compliance">
-                          <FileText size={18} />
-                       </button>
-                       <button className="p-2 hover:bg-white/5 rounded-lg text-[#666666] hover:text-white transition-all">
-                          <MoreVertical size={18} />
-                       </button>
-                    </div>
+                    <Link href={`/admin/subscribers/${sub.id}`}
+                      className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-[#D4AF37] hover:underline">
+                      <FileText size={14} /> Review
+                    </Link>
                   </td>
                 </tr>
               ))

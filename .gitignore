@@ -39,3 +39,13 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# database
+*.db
+*.db-journal
+
+# temporary artifacts
+scratch/
+seed_error.txt
+temp_index.html
+proxy.ts.bak

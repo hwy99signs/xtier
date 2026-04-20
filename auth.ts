@@ -27,8 +27,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
           const passwordsMatch = await bcrypt.compare(password, user.passwordHash);
 
-          // Only allow admins to use this login
-          if (passwordsMatch && user.role === 'ADMIN') {
+          if (passwordsMatch) {
             return {
               id: user.id,
               name: `${user.firstName} ${user.lastName}`,
@@ -58,7 +57,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     },
   },
   pages: {
-    signIn: '/admin/login',
+    signIn: '/login',
   },
   session: {
     strategy: 'jwt',

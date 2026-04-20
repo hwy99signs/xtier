@@ -147,21 +147,74 @@ export default function HomePage() {
               </Link>
            </div>
            
-           <div className="relative">
+           <div className="relative pb-6 pl-6 mt-12 md:mt-0">
               <div className="card-glass aspect-video overflow-hidden group">
-                 <div className="absolute inset-0 bg-[#0A0A0A] flex flex-col items-center justify-center p-12 overflow-hidden">
+                 <div className="absolute inset-0 bg-[#0A0A0A] flex flex-col items-center justify-center p-8 md:p-12 pb-16 overflow-hidden">
                     <div className="absolute top-0 right-0 p-4">
                        <ListChecks className="text-[#D4AF37]/20" size={120} />
                     </div>
                     <h3 className="font-display text-2xl mb-4 text-center z-10 font-bold uppercase tracking-widest italic text-white/80">Application Required</h3>
-                    <p className="text-[#D4AF37] font-display text-4xl font-black italic mt-2">No Automatic Approvals</p>
-                    <p className="text-[13px] tracking-[0.4em] uppercase text-white/50 mt-6 text-center font-semibold">Quality & Reliability Guaranteed</p>
+                    <p className="text-[#D4AF37] font-display text-3xl md:text-4xl font-black italic mt-2 text-center z-10">No Automatic Approvals</p>
+                    <p className="text-[11px] md:text-[13px] tracking-[0.4em] uppercase text-white/50 mt-6 text-center font-semibold z-10">Quality & Reliability Guaranteed</p>
                  </div>
               </div>
-              <div className="absolute -bottom-6 -left-6 bg-[#D4AF37] text-black px-8 py-5 font-bold text-sm uppercase tracking-widest shadow-2xl">
+              <div className="absolute bottom-0 left-0 bg-[#D4AF37] text-black px-6 md:px-8 py-4 font-bold text-xs md:text-sm uppercase tracking-widest shadow-[0_0_30px_rgba(212,175,55,0.3)] z-20 border border-[#bfa238]">
                 Manual Verification
               </div>
            </div>
+        </div>
+      </section>
+
+      {/* ─── Rollout Strategy Section ────────────────────────────────────── */}
+      <section className="section-padding container-max px-6 border-t border-[#222222]">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+          <div className="animate-fade-in-up">
+            <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-[#D4AF37]/10 border border-[#D4AF37]/30 mb-6 font-display">
+              <span className="text-xs uppercase tracking-[0.2em] font-bold text-[#D4AF37]">The Expansion Blueprint</span>
+            </div>
+            <h2 className="section-title mb-6 text-left">Controlled Stage-Based Rollout</h2>
+            <p className="text-[#A0A0A0] leading-relaxed mb-8">
+              To maintain our uncompromising standard of reliability, ERANTT TRANSIT expands using a strict density-first model. We do not open new corridors until existing routes reach 100% operational stability.
+            </p>
+            <div className="space-y-6">
+              <div className="flex gap-4 items-center">
+                <div className="w-12 h-12 rounded-lg bg-black/40 border border-[#D4AF37]/20 flex items-center justify-center shrink-0 font-display font-bold text-[#D4AF37]">01</div>
+                <div>
+                  <h4 className="text-white font-bold mb-1 tracking-wide uppercase">Current: Kingwood Corridor</h4>
+                  <p className="text-[10px] text-[#D4AF37] uppercase tracking-widest font-bold">Active & Accepting Subscriber Applications</p>
+                </div>
+              </div>
+              <div className="flex gap-4 items-center opacity-50">
+                <div className="w-12 h-12 rounded-lg bg-black/40 border border-white/10 flex items-center justify-center shrink-0 font-display font-bold text-white/40">02</div>
+                <div>
+                  <h4 className="text-white/60 font-bold mb-1 tracking-wide uppercase">Upcoming: Atascocita Loop</h4>
+                  <p className="text-[10px] text-[#666666] uppercase tracking-widest">In Feasibility Assessment</p>
+                </div>
+              </div>
+              <div className="flex gap-4 items-center opacity-25">
+                <div className="w-12 h-12 rounded-lg bg-black/40 border border-white/10 flex items-center justify-center shrink-0 font-display font-bold text-white/40">03</div>
+                <div>
+                  <h4 className="text-white/40 font-bold mb-1 tracking-wide uppercase">Future: Humble Express</h4>
+                  <p className="text-[10px] text-[#666666] uppercase tracking-widest">Waitlist Data Collection Only</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="card-glass p-10 border-[#D4AF37]/10 relative overflow-hidden group animate-fade-in-up transition-all duration-500 hover:border-[#D4AF37]/30">
+            <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+               <ShieldCheck className="text-[#D4AF37]" size={150} />
+            </div>
+            <h3 className="font-display text-xl mb-4 text-[#D4AF37] uppercase tracking-widest font-bold">Route Stability Commitment</h3>
+            <p className="text-sm text-[#A0A0A0] leading-relaxed mb-8 relative z-10">
+              Our business model wins through route density. We do not operate dynamic "on-the-fly" routes. Every subscription contributes to the stabilization of a permanent transit pillar in your community.
+            </p>
+            <div className="p-6 bg-black/60 rounded-xl border border-white/5 relative z-10">
+              <p className="text-[10px] uppercase tracking-[0.2em] text-[#D4AF37] mb-3 font-black">Operational Rule</p>
+              <p className="text-sm italic text-white/80 leading-relaxed">
+                "Consistency is the only metric that matters in executive transit. We launch slow to finish first."
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 

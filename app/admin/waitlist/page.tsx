@@ -3,7 +3,7 @@ import { prisma } from '@/lib/prisma';
 import { updateSubscriberStatus } from '@/actions/admin';
 import Link from 'next/link';
 import { ListFilter, MapPin, ArrowRight, ArrowUpRight } from 'lucide-react';
-import { cn, formatCurrency } from '@/lib/utils';
+import { cn, formatCurrency, formatDate } from '@/lib/utils';
 
 export default async function AdminWaitlistPage() {
   const waitlisted = await prisma.subscriber.findMany({
@@ -63,7 +63,7 @@ export default async function AdminWaitlistPage() {
                   </td>
                   <td className="px-8 py-4 text-sm font-bold text-white">{formatCurrency(sub.estimatedPrice ?? 0)}</td>
                   <td className="px-8 py-4 text-sm text-[#666]">
-                    {new Date(sub.createdAt).toLocaleDateString()}
+                    {formatDate(sub.createdAt)}
                   </td>
                   <td className="px-8 py-4">
                     <div className="flex items-center justify-end gap-3">

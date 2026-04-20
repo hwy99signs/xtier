@@ -1,7 +1,7 @@
 import React from 'react';
-import { prisma } from '@/lib/prisma';
-import { formatCurrency, cn } from '@/lib/utils';
+import { formatCurrency, formatDateTime, cn } from '@/lib/utils';
 import Link from 'next/link';
+import { prisma } from '@/lib/prisma';
 import {
   Users, Car, Clock, CreditCard, AlertCircle, CheckCircle2,
   ArrowUpRight, ListFilter, Activity, DollarSign, ShieldCheck, ChevronRight
@@ -9,23 +9,26 @@ import {
 
 export default async function AdminDashboardPage() {
   const [
-    totalSubscribers,
-    totalDrivers,
     pendingApprovals,
     approvedSubs,
     waitlisted,
+    totalSubscribers,
     driversPending,
+    totalDrivers,
     unpaidCount,
-    recentLogs,
+    recentLogs
   ] = await Promise.all([
-    prisma.subscriber.count(),
-    prisma.driver.count(),
     prisma.subscriber.count({ where: { status: 'PENDING_APPROVAL' } }),
     prisma.subscriber.count({ where: { status: 'APPROVED' } }),
     prisma.subscriber.count({ where: { status: 'WAITLISTED' } }),
+    prisma.subscriber.count(),
     prisma.driver.count({ where: { status: 'PENDING_REVIEW' } }),
+    prisma.driver.count(),
     prisma.subscriber.count({ where: { paymentStatus: 'UNPAID' } }),
-    prisma.auditLog.findMany({ orderBy: { createdAt: 'desc' }, take: 6 }),
+    prisma.auditLog.findMany({
+      orderBy: { createdAt: 'desc' },
+      take: 5
+    })
   ]);
 
   const statCards = [
@@ -102,7 +105,7 @@ export default async function AdminDashboardPage() {
                   <div className="flex-1 min-w-0">
                     <p className="text-xs font-bold text-white truncate">{log.action.replace(/_/g, ' ')}</p>
                     <p className="text-[10px] text-[#555555]">
-                      {log.adminName} · {new Date(log.createdAt).toLocaleString()}
+                      {log.adminName} · {formatDateTime(log.createdAt)}
                     </p>
                   </div>
                   <span className="text-[10px] text-[#D4AF37] font-bold bg-[#D4AF37]/10 px-2 py-0.5 rounded-full uppercase tracking-widest shrink-0">

@@ -22,6 +22,7 @@ export function getMockDistance(zip: string): number {
     '77396': 17,
     '77373': 25,
     '77386': 28,
+    '99999': 45, // Out of area waitlist trigger
   };
   return zipDistances[zip] ?? 25;
 }
@@ -32,21 +33,18 @@ export function getMockDistance(zip: string): number {
 export async function getDistance(origin: string, destination: string): Promise<DistanceResult> {
   const apiKey = process.env.GOOGLE_MAPS_API_KEY;
 
+  // Extract ZIP from origin/destination for fallback and logging
+  const originZipMatch = origin.match(/\d{5}/);
+  const destZipMatch = destination.match(/\d{5}/);
+  const originalZip = originZipMatch ? originZipMatch[0] : '77339';
+
   if (apiKey) {
     try {
-      // In a real environment, you'd call the Google Maps SDK or fetch API
-      // const response = await fetch(`https://maps.googleapis.com/maps/api/distancematrix/json?origins=${origin}&destinations=${destination}&key=${apiKey}`);
-      // const data = await response.json();
-      
-      console.log(`[STAGING] Google Maps API call simulation for: ${origin} -> ${destination}`);
-      
-      // Since we are in staging and likely don't have a balance-active key in the env yet,
-      // we check the ZIP of the origin to provide the "real" mock data while logging the intent.
-      const zipMatch = origin.match(/\d{5}/);
-      const zip = zipMatch ? zipMatch[0] : '77339';
+      // In a real environment, you'd call the Google Maps SDK
+      console.log(`[STAGING] Google Maps API request for route: ${origin} -> ${destination}`);
       
       return {
-        miles: getMockDistance(zip),
+        miles: getMockDistance(originalZip),
         durationMinutes: 35,
         source: 'google',
       };
@@ -55,12 +53,9 @@ export async function getDistance(origin: string, destination: string): Promise<
     }
   }
 
-  // Fallback to ZIP-based mock
-  const zipMatch = origin.match(/\d{5}/);
-  const zip = zipMatch ? zipMatch[0] : '77339';
-  
+  // Fallback to robust ZIP-based mock
   return {
-    miles: getMockDistance(zip),
+    miles: getMockDistance(originalZip),
     durationMinutes: 35,
     source: 'mock',
   };

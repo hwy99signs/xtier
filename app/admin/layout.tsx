@@ -7,24 +7,27 @@ import {
   Route,
   DollarSign,
   CreditCard,
-  ClipboardList,
   FileText,
   Shield,
   Settings,
   LogOut,
   Bell,
   Search,
-  ListFilter
+  ListFilter,
+  Map
 } from 'lucide-react';
 import { Logo } from '@/components/Logo';
-import { auth, signOut } from '@/auth';
+import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
+import type { MockSession } from '@/lib/mock-data';
+import { LogoutButton } from '@/components/LogoutButton';
 
 const sidebarLinks = [
   { name: 'Dashboard',    icon: LayoutDashboard, href: '/admin/dashboard' },
   { name: 'Subscribers',  icon: Users,            href: '/admin/subscribers' },
   { name: 'Drivers',      icon: Car,              href: '/admin/drivers' },
   { name: 'Routes',       icon: Route,            href: '/admin/routes' },
+  { name: 'Zones',        icon: Map,              href: '/admin/zones' },
   { name: 'Pricing',      icon: DollarSign,       href: '/admin/pricing' },
   { name: 'Payments',     icon: CreditCard,       href: '/admin/payments' },
   { name: 'Waitlist',     icon: ListFilter,       href: '/admin/waitlist' },
@@ -33,11 +36,13 @@ const sidebarLinks = [
   { name: 'Settings',     icon: Settings,         href: '/admin/settings' },
 ];
 
+import { auth } from '@/auth';
+
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const session = await auth();
 
-  if (!session || (session.user as any)?.role !== 'ADMIN') {
-    redirect('/admin/login');
+  if (!session?.user || session.user.role !== 'ADMIN') {
+    redirect('/login');
   }
 
   return (
@@ -71,12 +76,11 @@ export default async function AdminLayout({ children }: { children: React.ReactN
 
         {/* Logout */}
         <div className="p-4 border-t border-[#1a1a1a]">
-          <form action={async () => { 'use server'; await signOut({ redirectTo: '/admin/login' }); }}>
-            <button className="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-[#EF4444]/60 hover:text-[#EF4444] hover:bg-[#EF4444]/5 rounded-xl transition-all w-full">
-              <LogOut size={16} />
-              Logout Session
-            </button>
-          </form>
+          <LogoutButton
+            label="Logout Session"
+            iconSize={16}
+            className="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-[#EF4444]/60 hover:text-[#EF4444] hover:bg-[#EF4444]/5 rounded-xl transition-all w-full cursor-pointer"
+          />
         </div>
       </aside>
 

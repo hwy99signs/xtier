@@ -18,8 +18,17 @@ export const subscriberSchema = z.object({
   dropoffCity: z.string().min(2, 'Please enter destination city'),
   dropoffState: z.string().length(2, 'Please use the 2-letter state code'),
   dropoffZip: z.string().regex(/^\d{5}$/, 'Please enter a valid 5-digit ZIP code'),
-
   direction: z.enum(['TO_AIRPORT', 'FROM_AIRPORT', 'BOTH']).default('BOTH'),
+
+  // Subscription details
+  employerName: z.string().optional(),
+  shiftType: z.string().min(1, 'Shift type is required'),
+  serviceType: z.enum(['COMMUTER', 'EXECUTIVE', 'AIRPORT']).default('COMMUTER'),
+  daysPerWeek: z.coerce.number().min(1, 'Minimum 1 day').max(7, 'Maximum 7 days'),
+  preferredPickupTime: z.string().min(1, 'Pickup time is required'),
+  preferredReturnTime: z.string().min(1, 'Return time is required'),
+  startDate: z.string().min(1, 'Start date is required'),
+  notes: z.string().max(500, 'Notes must be under 500 characters').optional(),
 
   // Terms checkboxes — all must be true
   termsAccepted: z.boolean().refine(v => v === true, {
@@ -36,6 +45,12 @@ export const subscriberSchema = z.object({
   }),
   ageConfirmed: z.boolean().refine(v => v === true, {
     message: 'You must confirm you are 18 or older',
+  }),
+  conductAccepted: z.boolean().refine(v => v === true, {
+    message: 'You must accept the Passenger Conduct Code',
+  }),
+  commuterAgreementAccepted: z.boolean().refine(v => v === true, {
+    message: 'You must acknowledge the fixed-route nature of our service',
   }),
 })
 

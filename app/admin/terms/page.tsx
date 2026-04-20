@@ -1,8 +1,9 @@
 import React from 'react';
 import { prisma } from '@/lib/prisma';
 import { publishTermsVersion } from '@/actions/admin';
-import { FileText, CheckCircle2, Users } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { FileText, Users } from 'lucide-react';
+import { cn, formatDate } from '@/lib/utils';
+import AcceptanceTable from '@/components/admin/AcceptanceTable';
 
 export default async function AdminTermsPage() {
   const versions = await prisma.termsVersion.findMany({
@@ -13,7 +14,7 @@ export default async function AdminTermsPage() {
   const activeVersion = versions.find((v) => v.isActive);
   const acceptances = await prisma.termsAcceptance.findMany({
     orderBy: { acceptedAt: 'desc' },
-    take: 20,
+    take: 50, // Increased limit for better auditing
   });
 
   return (
@@ -76,7 +77,7 @@ export default async function AdminTermsPage() {
                 </div>
                 <p className="text-sm font-bold text-white">{activeVersion.title}</p>
                 <p className="text-[10px] text-[#555]">
-                  Published {new Date(activeVersion.publishedAt).toLocaleDateString()} ·{' '}
+                  Published {formatDate(activeVersion.publishedAt)} ·{' '}
                   {activeVersion.acceptances.length} acceptances
                 </p>
                 <div className="mt-4 p-4 bg-black/40 rounded-xl text-xs text-[#666] leading-relaxed line-clamp-6 overflow-hidden">
@@ -111,42 +112,19 @@ export default async function AdminTermsPage() {
       </div>
 
       {/* Acceptance Records */}
-      <div className="card-glass border-[#1e1e1e] overflow-hidden">
-        <div className="px-8 py-5 border-b border-[#1e1e1e] flex items-center gap-3">
-          <Users size={16} className="text-[#D4AF37]" />
-          <h2 className="font-display font-bold text-base uppercase tracking-widest">Recent Acceptance Records</h2>
+      <div className="space-y-4">
+        <div className="flex items-center gap-3 px-4">
+          <Users size={20} className="text-[#D4AF37]" />
+          <h2 className="font-display font-bold text-xl uppercase tracking-widest">Global Audit Log</h2>
         </div>
+        
         {acceptances.length === 0 ? (
-          <div className="p-16 text-center opacity-40">
+          <div className="card-glass p-16 text-center opacity-40 border-[#1e1e1e]">
             <FileText size={40} className="text-[#D4AF37] mx-auto mb-3" />
             <p className="text-xs uppercase tracking-widest font-bold">No acceptance records yet</p>
           </div>
         ) : (
-          <table className="w-full">
-            <thead>
-              <tr className="border-b border-[#1e1e1e] text-[10px] uppercase tracking-[0.2em] text-[#555] font-bold bg-black/30">
-                <th className="px-8 py-4 text-left">Email</th>
-                <th className="px-8 py-4 text-left">Accepted At</th>
-                <th className="px-8 py-4 text-left">IP Address</th>
-                <th className="px-8 py-4 text-left">Checkboxes</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-[#0f0f0f]">
-              {acceptances.map((a) => (
-                <tr key={a.id} className="hover:bg-white/[0.02] transition-colors">
-                  <td className="px-8 py-4 text-sm font-medium text-white">{a.email}</td>
-                  <td className="px-8 py-4 text-xs text-[#666]">{new Date(a.acceptedAt).toLocaleString()}</td>
-                  <td className="px-8 py-4 text-xs text-[#666] font-mono">{a.ipAddress ?? '—'}</td>
-                  <td className="px-8 py-4">
-                    <div className="flex items-center gap-2 text-emerald-400">
-                      <CheckCircle2 size={14} />
-                      <span className="text-[10px] font-bold uppercase tracking-widest">Recorded</span>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <AcceptanceTable records={acceptances} />
         )}
       </div>
     </div>

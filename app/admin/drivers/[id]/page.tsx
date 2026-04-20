@@ -4,11 +4,13 @@ import { updateDriverStatus } from '@/actions/admin';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeft, Car, ShieldCheck, CheckCircle2, XCircle, Clock } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { cn, formatDate, formatDateTime } from '@/lib/utils';
+import TermsAcceptanceDetail from '@/components/admin/TermsAcceptanceDetail';
 
-export default async function DriverDetailPage({ params }: { params: { id: string } }) {
+export default async function DriverDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
   const driver = await prisma.driver.findUnique({
-    where: { id: params.id },
+    where: { id },
     include: {
       user: true,
       termsAcceptance: true,
@@ -49,7 +51,7 @@ export default async function DriverDetailPage({ params }: { params: { id: strin
               {[
                 { label: 'License Number', val: driver.licenseNumber },
                 { label: 'License State', val: driver.licenseState },
-                { label: 'License Expiry', val: new Date(driver.licenseExpiry).toLocaleDateString() },
+                { label: 'License Expiry', val: formatDate(driver.licenseExpiry) },
                 { label: 'Years Experience', val: `${driver.yearsExperience} yrs` },
               ].map(({ label, val }) => (
                 <div key={label}>
@@ -89,11 +91,12 @@ export default async function DriverDetailPage({ params }: { params: { id: strin
               <div className="space-y-2">
                 <div className="flex items-center gap-3 text-emerald-400 text-sm">
                   <ShieldCheck size={16} />
-                  Terms accepted {new Date(driver.termsAcceptance.acceptedAt).toLocaleString()}
+                  Terms accepted {formatDateTime(driver.termsAcceptance.acceptedAt)}
                 </div>
-                <pre className="text-[10px] text-[#666] bg-black/40 p-4 rounded-lg overflow-auto mt-3">
-                  {JSON.stringify(driver.termsAcceptance.checkboxResponses, null, 2)}
-                </pre>
+                <TermsAcceptanceDetail 
+                  checkboxResponses={driver.termsAcceptance.checkboxResponses} 
+                  className="mt-4"
+                />
               </div>
             ) : (
               <p className="text-[#555] text-sm italic">No terms record found.</p>
@@ -150,12 +153,12 @@ export default async function DriverDetailPage({ params }: { params: { id: strin
             <h3 className="font-display font-bold text-base uppercase tracking-widest mb-2">Timeline</h3>
             <div>
               <p className="text-[10px] text-[#555] uppercase tracking-widest font-bold mb-1">Applied</p>
-              <p className="text-sm text-[#A0A0A0]">{new Date(driver.createdAt).toLocaleDateString()}</p>
+              <p className="text-sm text-[#A0A0A0]">{formatDate(driver.createdAt)}</p>
             </div>
             {driver.approvedAt && (
               <div>
                 <p className="text-[10px] text-[#555] uppercase tracking-widest font-bold mb-1">Approved</p>
-                <p className="text-sm text-emerald-400">{new Date(driver.approvedAt).toLocaleDateString()}</p>
+                <p className="text-sm text-emerald-400">{formatDate(driver.approvedAt)}</p>
               </div>
             )}
           </div>

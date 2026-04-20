@@ -5,6 +5,7 @@ import { prisma } from '@/lib/prisma';
 import bcrypt from 'bcryptjs';
 import { headers } from 'next/headers';
 import { estimateDistance, calculateFare, calculateCommitment } from '@/lib/utils';
+import { calculateDetailedPricing } from '@/lib/pricing-engine';
 
 export async function createSubscriberAction(data: SubscriberFormData) {
   // 1. Validate on server
@@ -40,10 +41,9 @@ export async function createSubscriberAction(data: SubscriberFormData) {
       return { error: 'Service agreement is currently unavailable' };
     }
 
-    // 5. Calculate pricing
+    // 5. Calculate detailed pricing and assignment
     const distance = estimateDistance(validated.pickupZip);
-    const fare = calculateFare(distance);
-    const commitment = calculateCommitment(fare);
+    const pricing = await calculateDetailedPricing(distance, validated.serviceType);
 
     // 6. DB Transaction: Create everything
     const result = await prisma.$transaction(async (tx) => {
@@ -72,6 +72,9 @@ export async function createSubscriberAction(data: SubscriberFormData) {
             cancellation: Boolean(validated.cancellationAccepted),
             sms: Boolean(validated.smsConsentAccepted),
             age: Boolean(validated.ageConfirmed),
+            conduct: Boolean((validated as any).conductAccepted),
+            commuter: Boolean((validated as any).commuterAgreementAccepted),
+            pricingSnapshot: pricing as any,
           },
         },
       });
@@ -88,21 +91,29 @@ export async function createSubscriberAction(data: SubscriberFormData) {
           dropoffCity: validated.dropoffCity,
           dropoffState: validated.dropoffState,
           dropoffZip: validated.dropoffZip,
+          
           distanceMiles: distance,
-          estimatedPrice: fare,
-          commitmentPaid: 0,
-          balanceDue: fare,
+          estimatedPrice: pricing.totalFare,
+          zoneId: pricing.zoneId,
+          
           direction: validated.direction,
-          status: 'PENDING_APPROVAL',
+          employerName: validated.employerName,
+          shiftType: validated.shiftType,
+          serviceType: validated.serviceType,
+          daysPerWeek: validated.daysPerWeek,
+          preferredPickupTime: validated.preferredPickupTime,
+          preferredReturnTime: validated.preferredReturnTime,
+          startDate: validated.startDate ? new Date(validated.startDate) : null,
+          notes: validated.notes,
+          
+          status: pricing.isWaitlistOnly ? 'WAITLISTED' : 'PENDING_APPROVAL',
           termsAcceptanceId: acceptance.id,
+          paymentStatus: 'UNPAID',
         },
       });
 
       return subscriber;
     });
-
-    // 7. Stripe placeholder (Phase 3)
-    // In production, we would create a Stripe Customer here
 
     return { success: true };
   } catch (err: any) {

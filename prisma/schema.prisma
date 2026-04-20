@@ -3,271 +3,191 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
+  url      = "file:./dev.db"
 }
-
-// ─── Enums ───────────────────────────────────────────────────────────────────
-
-enum UserRole {
-  CUSTOMER
-  DRIVER
-  ADMIN
-}
-
-enum SubscriberStatus {
-  PENDING_APPROVAL
-  APPROVED
-  WAITLISTED
-  REJECTED
-  SUSPENDED
-}
-
-enum DriverStatus {
-  PENDING_REVIEW
-  ACTIVE
-  INACTIVE
-  REJECTED
-}
-
-enum BookingDirection {
-  TO_AIRPORT
-  FROM_AIRPORT
-  BOTH
-}
-
-enum BookingStatus {
-  PENDING
-  CONFIRMED
-  DRIVER_ASSIGNED
-  EN_ROUTE
-  ARRIVED
-  COMPLETED
-  CANCELLED
-}
-
-enum PaymentStatus {
-  UNPAID
-  COMMITMENT_PAID
-  BALANCE_DUE
-  PAID_IN_FULL
-  REFUNDED
-  FAILED
-}
-
-enum ZoneType {
-  ORIGIN
-  DESTINATION
-  BOTH
-}
-
-// ─── Models ──────────────────────────────────────────────────────────────────
 
 model User {
-  id           String   @id @default(cuid())
-  email        String   @unique
+  id           String      @id @default(cuid())
+  email        String      @unique
   passwordHash String
   firstName    String
   lastName     String
   phone        String
-  role         UserRole @default(CUSTOMER)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-
-  subscriber   Subscriber?
+  role         String      @default("CUSTOMER")
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
   driver       Driver?
+  subscriber   Subscriber?
+  sentMessages     ChatMessage[] @relation("SentMessages")
+  receivedMessages ChatMessage[] @relation("ReceivedMessages")
 
   @@map("users")
 }
 
 model Subscriber {
-  id              String           @id @default(cuid())
-  userId          String           @unique
-  user            User             @relation(fields: [userId], references: [id])
-
-  // Address info
-  pickupAddress   String
-  pickupCity      String
-  pickupState     String
-  pickupZip       String
-  dropoffAddress  String           // Usually IAH
-  dropoffCity     String
-  dropoffState    String
-  dropoffZip      String
-
-  // Calculated fields
-  distanceMiles   Float?
-  estimatedPrice  Float?
-  zoneId          String?
-  zone            ServiceZone?     @relation(fields: [zoneId], references: [id])
-
-  // Direction preference
-  direction       BookingDirection @default(BOTH)
-
-  // Admin workflow
-  status          SubscriberStatus @default(PENDING_APPROVAL)
-  assignedDriverId String?
-  assignedDriver  Driver?          @relation(fields: [assignedDriverId], references: [id])
-  adminNotes      String?
-  approvedAt      DateTime?
-  approvedBy      String?
-
-  // Payment
-  paymentStatus   PaymentStatus    @default(UNPAID)
-  commitmentPaid  Float?
-  balanceDue      Float?
-  commitmentPaidAt DateTime?
-  balancePaidAt   DateTime?
-  stripeCustomerId String?
-  stripePaymentId  String?
-
-  // Terms
-  termsAcceptanceId String?
-  termsAcceptance   TermsAcceptance? @relation(fields: [termsAcceptanceId], references: [id])
-
-  bookings        Booking[]
-  createdAt       DateTime         @default(now())
-  updatedAt       DateTime         @updatedAt
+  id                  String           @id @default(cuid())
+  userId              String           @unique
+  pickupAddress       String
+  pickupCity          String
+  pickupState         String
+  pickupZip           String
+  dropoffAddress      String
+  dropoffCity         String
+  dropoffState        String
+  dropoffZip          String
+  distanceMiles       Float?
+  estimatedPrice      Float?
+  zoneId              String?
+  direction           String           @default("BOTH")
+  employerName        String?
+  shiftType           String?
+  serviceType         String           @default("COMMUTER")
+  daysPerWeek         Int              @default(5)
+  preferredPickupTime String?
+  preferredReturnTime String?
+  startDate           DateTime?
+  notes               String?
+  status              String           @default("PENDING_APPROVAL")
+  assignedDriverId    String?
+  adminNotes          String?
+  approvedAt          DateTime?
+  approvedBy          String?
+  paymentStatus       String           @default("UNPAID")
+  commitmentPaid      Float?
+  balanceDue          Float?
+  commitmentPaidAt    DateTime?
+  balancePaidAt       DateTime?
+  stripeCustomerId    String?
+  stripePaymentId     String?
+  termsAcceptanceId   String?
+  createdAt           DateTime         @default(now())
+  updatedAt           DateTime         @updatedAt
+  bookings            Booking[]
+  user                User             @relation(fields: [userId], references: [id])
+  zone                ServiceZone?     @relation(fields: [zoneId], references: [id])
+  assignedDriver      Driver?          @relation(fields: [assignedDriverId], references: [id])
+  termsAcceptance     TermsAcceptance? @relation(fields: [termsAcceptanceId], references: [id])
 
   @@map("subscribers")
 }
 
 model Driver {
-  id              String       @id @default(cuid())
-  userId          String       @unique
-  user            User         @relation(fields: [userId], references: [id])
-
-  // Application fields
-  licenseNumber   String
-  licenseState    String
-  licenseExpiry   DateTime
-  vehicleMake     String
-  vehicleModel    String
-  vehicleYear     Int
-  vehicleColor    String
-  vehiclePlate    String
-  vehicleCapacity Int          @default(4)
-  yearsExperience Int          @default(0)
-  bio             String?
-
-  // Admin workflow
-  status          DriverStatus @default(PENDING_REVIEW)
-  adminNotes      String?
-  approvedAt      DateTime?
-  approvedBy      String?
-  isAvailable     Boolean      @default(false)
-
-  // Terms
+  id                String           @id @default(cuid())
+  userId            String           @unique
+  licenseNumber     String
+  licenseState      String
+  licenseExpiry     DateTime
+  vehicleMake       String
+  vehicleModel      String
+  vehicleYear       Int
+  vehicleColor      String
+  vehiclePlate      String
+  vehicleCapacity   Int              @default(4)
+  yearsExperience   Int              @default(0)
+  bio               String?
+  status            String           @default("PENDING_REVIEW")
+  adminNotes        String?
+  approvedAt        DateTime?
+  approvedBy        String?
+  isAvailable       Boolean          @default(false)
   termsAcceptanceId String?
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+  bookings          Booking[]
+  user              User             @relation(fields: [userId], references: [id])
   termsAcceptance   TermsAcceptance? @relation(fields: [termsAcceptanceId], references: [id])
-
-  subscribers     Subscriber[]
-  bookings        Booking[]
-  createdAt       DateTime     @default(now())
-  updatedAt       DateTime     @updatedAt
+  subscribers       Subscriber[]
 
   @@map("drivers")
 }
 
 model ServiceZone {
-  id          String    @id @default(cuid())
-  name        String    // e.g. "Kingwood North", "Atascocita"
-  description String?
-  type        ZoneType  @default(ORIGIN)
-  minMiles    Float     @default(0)
-  maxMiles    Float     @default(999)
-  basePrice   Float     @default(45)
-  isActive    Boolean   @default(true)
-  sortOrder   Int       @default(0)
-
-  subscribers Subscriber[]
+  id           String        @id @default(cuid())
+  name         String
+  description  String?
+  type         String        @default("ORIGIN")
+  minMiles     Float         @default(0)
+  maxMiles     Float         @default(999)
+  basePrice    Float         @default(45)
+  isActive     Boolean       @default(true)
+  sortOrder    Int           @default(0)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
   pricingRules PricingRule[]
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  subscribers  Subscriber[]
 
   @@map("service_zones")
 }
 
 model PricingRule {
-  id           String    @id @default(cuid())
-  name         String
-  description  String?
-  zoneId       String?
-  zone         ServiceZone? @relation(fields: [zoneId], references: [id])
-  direction    BookingDirection @default(BOTH)
-
-  // Pricing components
-  baseFare     Float     @default(45)
-  perMileRate  Float     @default(2.00)
-  surgeMultiplier Float  @default(1.0)
-  commitmentPct Float    @default(20) // % of total charged upfront
-  minFare      Float     @default(45)
-  maxFare      Float?
-
-  isActive     Boolean   @default(true)
-  effectiveFrom DateTime @default(now())
-  effectiveTo  DateTime?
-
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
+  id              String       @id @default(cuid())
+  name            String
+  description     String?
+  zoneId          String?
+  direction       String       @default("BOTH")
+  baseFare        Float        @default(45)
+  perMileRate     Float        @default(2.00)
+  surgeMultiplier Float        @default(1.0)
+  commitmentPct   Float        @default(20)
+  minFare         Float        @default(45)
+  maxFare         Float?
+  isActive        Boolean      @default(true)
+  effectiveFrom   DateTime     @default(now())
+  effectiveTo     DateTime?
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+  zone            ServiceZone? @relation(fields: [zoneId], references: [id])
 
   @@map("pricing_rules")
 }
 
 model Booking {
-  id             String        @id @default(cuid())
+  id             String     @id @default(cuid())
   subscriberId   String
-  subscriber     Subscriber    @relation(fields: [subscriberId], references: [id])
   driverId       String?
-  driver         Driver?       @relation(fields: [driverId], references: [id])
-
   scheduledAt    DateTime
-  direction      BookingDirection
+  direction      String
   pickupAddress  String
   dropoffAddress String
   distanceMiles  Float?
   fareAmount     Float?
-
-  status         BookingStatus @default(PENDING)
-  paymentStatus  PaymentStatus @default(UNPAID)
+  status         String     @default("PENDING")
+  paymentStatus  String     @default("UNPAID")
   flightNumber   String?
   notes          String?
-
-  createdAt      DateTime      @default(now())
-  updatedAt      DateTime      @updatedAt
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+  subscriber     Subscriber @relation(fields: [subscriberId], references: [id])
+  driver         Driver?    @relation(fields: [driverId], references: [id])
 
   @@map("bookings")
 }
 
 model TermsVersion {
-  id          String   @id @default(cuid())
-  version     String   // e.g. "v1.0", "v1.1"
+  id          String            @id @default(cuid())
+  version     String
   title       String
-  content     String   @db.Text
-  isActive    Boolean  @default(false)
-  publishedAt DateTime @default(now())
-  createdAt   DateTime @default(now())
-
+  content     String
+  isActive    Boolean           @default(false)
+  publishedAt DateTime          @default(now())
+  createdAt   DateTime          @default(now())
   acceptances TermsAcceptance[]
 
   @@map("terms_versions")
 }
 
 model TermsAcceptance {
-  id              String       @id @default(cuid())
-  termsVersionId  String
-  termsVersion    TermsVersion @relation(fields: [termsVersionId], references: [id])
-
-  // Who accepted
-  email           String
-  ipAddress       String?
-  userAgent       String?
-  acceptedAt      DateTime     @default(now())
-
-  // Individual checkbox responses (stored as JSON for audit)
+  id                String       @id @default(cuid())
+  termsVersionId    String
+  email             String
+  ipAddress         String?
+  userAgent         String?
+  acceptedAt        DateTime     @default(now())
   checkboxResponses Json
-
-  subscriberLinks Subscriber[]
-  driverLinks     Driver[]
+  driverLinks       Driver[]
+  subscriberLinks   Subscriber[]
+  termsVersion      TermsVersion @relation(fields: [termsVersionId], references: [id])
 
   @@map("terms_acceptances")
 }
@@ -275,7 +195,7 @@ model TermsAcceptance {
 model AdminSetting {
   id        String   @id @default(cuid())
   key       String   @unique
-  value     String   @db.Text
+  value     String
   label     String
   groupKey  String   @default("general")
   createdAt DateTime @default(now())
@@ -288,12 +208,25 @@ model AuditLog {
   id           String   @id @default(cuid())
   adminId      String?
   adminName    String?
-  action       String   // e.g. "APPROVED_SUBSCRIBER", "UPDATED_PRICING"
-  targetEntity String?  // e.g. "Subscriber", "Driver"
+  action       String
+  targetEntity String?
   targetId     String?
   previousData Json?
   newData      Json?
   createdAt    DateTime @default(now())
 
   @@map("audit_logs")
+}
+model ChatMessage {
+  id         String   @id @default(cuid())
+  content    String
+  senderId   String
+  receiverId String
+  readAt     DateTime?
+  createdAt  DateTime @default(now())
+
+  sender     User     @relation("SentMessages", fields: [senderId], references: [id])
+  receiver   User     @relation("ReceivedMessages", fields: [receiverId], references: [id])
+
+  @@map("chat_messages")
 }

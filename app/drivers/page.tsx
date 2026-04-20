@@ -1,4 +1,5 @@
 'use client';
+import Link from 'next/link';
 
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -43,13 +44,13 @@ export default function DriverPage() {
     }
   });
 
-  const watchCheckboxes = [
-    watch('conductAccepted'),
-    watch('backgroundCheckAccepted'),
-    watch('insuranceAccepted'),
-    watch('termsAccepted'),
-    watch('privacyAccepted')
-  ];
+  const watchCheckboxes = watch([
+    'conductAccepted',
+    'backgroundCheckAccepted',
+    'insuranceAccepted',
+    'termsAccepted',
+    'privacyAccepted'
+  ]);
 
   const allChecked = watchCheckboxes.every(val => val === true);
 
@@ -60,14 +61,14 @@ export default function DriverPage() {
     try {
       const result = await applyAsDriverAction(data);
 
-      if (result.error) {
-        throw new Error(result.error);
+      if (result && 'error' in result && result.error) {
+        throw new Error(result.error as string);
       }
 
       setSuccess(true);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } catch (err: any) {
-      setError(err.message);
+      setError(err.message || "An unexpected error occurred. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -75,21 +76,57 @@ export default function DriverPage() {
 
   if (success) {
     return (
-      <div className="min-h-screen pt-32 pb-20 hero-bg flex items-center justify-center px-6">
-        <div className="card-glass p-12 text-center max-w-lg w-full animate-fade-in-up">
-           <div className="w-20 h-20 rounded-full bg-success/20 border border-success/40 flex items-center justify-center mx-auto mb-8">
-              <CheckCircle2 className="text-success" size={40} />
-           </div>
-           <h1 className="text-3xl font-display mb-4">Application Submitted</h1>
-           <p className="text-white-muted mb-10">
-              Your professional driver application has been received. Our vetting department will perform a thorough background check and document review. Expect a response via email within 3-5 business days.
-           </p>
-           <button 
-              onClick={() => window.location.href = '/'} 
-              className="btn-gold w-full"
-            >
-              Return Home
-            </button>
+      <div className="min-h-screen hero-bg flex items-center justify-center px-6 relative overflow-hidden">
+        {/* Background glows for success state */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-success/10 rounded-full blur-[160px] opacity-[0.15] animate-pulse" />
+          <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#D4AF37]/5 rounded-full blur-[140px]" />
+        </div>
+
+        <div className="w-full max-w-xl z-10 animate-fade-in-up">
+          <div className="card-glass p-8 md:p-16 text-center border-success/30 shadow-2xl shadow-success/5">
+            <div className="w-24 h-24 rounded-full bg-success/10 border border-success/30 flex items-center justify-center mx-auto mb-10 relative">
+              <div className="absolute inset-0 rounded-full bg-success/20 animate-ping opacity-20" />
+              <ShieldCheck className="text-success" size={48} strokeWidth={1.5} />
+            </div>
+            
+            <h1 className="text-3xl md:text-5xl font-display font-bold text-white mb-6 tracking-tight">
+              Application <br className="md:hidden" /> Dispatched
+            </h1>
+            
+            <div className="gold-line mx-auto w-16 mb-8" />
+            
+            <div className="space-y-6 text-white-muted text-sm md:text-base leading-relaxed max-w-md mx-auto">
+              <p>
+                Your professional chauffeur application has been received and queued for manual background verification.
+              </p>
+              <p className="border-t border-white/5 pt-6 text-xs uppercase tracking-[0.2em] font-bold text-[#D4AF37]">
+                Executive Vetting Phase: ACTIVE
+              </p>
+              <p className="text-xs text-white/40">
+                Our vetting department typically completes initial record reviews within 3-5 business days. You will be notified of the board's decision via your registered email.
+              </p>
+            </div>
+            
+            <div className="mt-12 pt-8 border-t border-white/5 flex flex-col sm:flex-row gap-4 justify-center">
+              <button 
+                onClick={() => window.location.href = '/'} 
+                className="btn-gold px-10 h-14 text-sm"
+              >
+                Return to Home
+              </button>
+              <Link 
+                href="/terms" 
+                className="btn-outline-gold px-10 h-14 text-xs flex items-center justify-center"
+              >
+                Driver Guidelines
+              </Link>
+            </div>
+          </div>
+          
+          <p className="text-center mt-10 text-[10px] text-[#444] uppercase tracking-[0.4em] font-bold">
+            ERANTT TRANSIT · Partner Recruitment Portal
+          </p>
         </div>
       </div>
     );
@@ -258,7 +295,12 @@ export default function DriverPage() {
               </div>
             )}
 
-            <div className="flex flex-col items-center">
+            <div className="flex flex-col items-center gap-4">
+              {!allChecked && !isSubmitting && (
+                <p className="text-xs text-[#D4AF37] uppercase tracking-[0.15em] font-bold animate-pulse">
+                  Please check all agreements to enable application
+                </p>
+              )}
               <button
                 type="submit"
                 disabled={!allChecked || isSubmitting}

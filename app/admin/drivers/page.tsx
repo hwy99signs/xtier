@@ -1,5 +1,5 @@
 import React from 'react';
-import { prisma } from '@/lib/prisma';
+import Link from 'next/link';
 import { 
   Car, 
   ShieldCheck, 
@@ -9,17 +9,20 @@ import {
   CheckCircle2,
   Clock,
   AlertCircle,
-  Briefcase
+  Briefcase,
+  ChevronRight
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import Link from 'next/link';
+import { prisma } from '@/lib/prisma';
 
 export default async function AdminDriversPage() {
   const drivers = await prisma.driver.findMany({
     include: {
       user: true,
     },
-    orderBy: { createdAt: 'desc' },
+    orderBy: {
+      createdAt: 'desc',
+    },
   });
 
   return (
@@ -85,11 +88,10 @@ export default async function AdminDriversPage() {
                   <button className="text-[10px] uppercase font-bold text-[#666666] hover:text-[#D4AF37] transition-colors">
                      Audit Docs
                   </button>
-                  <div className="flex gap-2">
-                     <button className="p-2 hover:bg-white/5 rounded-lg text-[#666666] hover:text-white transition-all">
-                        <MoreVertical size={16} />
-                     </button>
-                  </div>
+                  <Link href={`/admin/drivers/${driver.id}`}
+                    className="flex items-center gap-1 text-[10px] uppercase font-bold text-[#D4AF37] hover:underline">
+                    View Profile <ChevronRight size={12} />
+                  </Link>
                </div>
             </div>
           ))

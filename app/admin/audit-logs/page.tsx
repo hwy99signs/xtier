@@ -1,7 +1,7 @@
 import React from 'react';
 import { prisma } from '@/lib/prisma';
 import { Shield } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { cn, formatDateTime } from '@/lib/utils';
 
 const actionColor: Record<string, string> = {
   APPROVED: 'text-emerald-400',
@@ -61,7 +61,7 @@ export default async function AdminAuditLogsPage() {
               {logs.map((log) => (
                 <tr key={log.id} className="hover:bg-white/[0.015] transition-colors">
                   <td className="px-8 py-3">
-                    <p className="text-xs text-[#A0A0A0] font-mono">{new Date(log.createdAt).toLocaleString()}</p>
+                    <p className="text-xs text-[#A0A0A0] font-mono">{formatDateTime(log.createdAt)}</p>
                   </td>
                   <td className="px-8 py-3">
                     <p className="text-sm font-bold text-white">{log.adminName ?? '—'}</p>

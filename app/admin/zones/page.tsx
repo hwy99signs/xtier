@@ -23,9 +23,9 @@ export default async function AdminZonesPage() {
           <h1 className="text-3xl font-display font-bold">Service Geography</h1>
           <p className="text-[#A0A0A0] text-sm mt-1">Define operational boundaries and base tier pricing for Kingwood and IAH.</p>
         </div>
-        <button className="btn-gold text-xs py-2.5 px-6 flex items-center gap-2">
+        <Link href="/admin/zones/new" className="btn-gold text-xs py-2.5 px-6 flex items-center gap-2">
            <Plus size={16} /> New Service Zone
-        </button>
+        </Link>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -75,9 +75,9 @@ export default async function AdminZonesPage() {
                         {zone.isActive ? "Operational" : "Deactivated"}
                      </span>
                   </div>
-                  <button className="text-[10px] font-bold text-[#666666] hover:text-white flex items-center gap-1 transition-all">
+                  <Link href={`/admin/zones/${zone.id}`} className="text-[10px] font-bold text-[#666666] hover:text-white flex items-center gap-1 transition-all">
                      MODIFY BOUNDARIES <ChevronRight size={14} />
-                  </button>
+                  </Link>
                </div>
             </div>
           ))

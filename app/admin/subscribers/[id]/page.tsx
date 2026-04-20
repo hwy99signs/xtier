@@ -1,17 +1,19 @@
 import React from 'react';
 import { prisma } from '@/lib/prisma';
-import { updateSubscriberStatus, assignDriverToSubscriber } from '@/actions/admin';
+import { updateSubscriberStatus, assignDriverToSubscriber, saveSubscriberNotes } from '@/actions/admin';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import {
   ArrowLeft, MapPin, Calendar, CreditCard, FileText,
-  Car, User, CheckCircle2, XCircle, Clock, ShieldCheck
+  Car, User, CheckCircle2, XCircle, Clock, ShieldCheck, AlertCircle
 } from 'lucide-react';
-import { cn, formatCurrency } from '@/lib/utils';
+import { cn, formatCurrency, formatDate, formatDateTime } from '@/lib/utils';
+import TermsAcceptanceDetail from '@/components/admin/TermsAcceptanceDetail';
 
-export default async function SubscriberDetailPage({ params }: { params: { id: string } }) {
+export default async function SubscriberDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
   const sub = await prisma.subscriber.findUnique({
-    where: { id: params.id },
+    where: { id },
     include: {
       user: true,
       zone: true,
@@ -113,7 +115,7 @@ export default async function SubscriberDetailPage({ params }: { params: { id: s
               </div>
               <div>
                 <p className="text-[10px] text-[#555] uppercase tracking-widest font-bold mb-1">Commitment Paid At</p>
-                <p className="text-sm text-[#A0A0A0]">{sub.commitmentPaidAt ? new Date(sub.commitmentPaidAt).toLocaleDateString() : '—'}</p>
+                <p className="text-sm text-[#A0A0A0]">{sub.commitmentPaidAt ? formatDate(sub.commitmentPaidAt) : '—'}</p>
               </div>
             </div>
           </div>
@@ -125,12 +127,13 @@ export default async function SubscriberDetailPage({ params }: { params: { id: s
               <div className="space-y-3 text-sm">
                 <div className="flex items-center gap-3 text-emerald-400">
                   <CheckCircle2 size={16} />
-                  <span>Terms accepted on {new Date(sub.termsAcceptance.acceptedAt).toLocaleString()}</span>
+                  <span>Terms accepted on {formatDateTime(sub.termsAcceptance.acceptedAt)}</span>
                 </div>
                 <p className="text-[11px] text-[#555]">IP: {sub.termsAcceptance.ipAddress ?? '—'}</p>
-                <pre className="text-[10px] text-[#666] bg-black/40 p-4 rounded-lg overflow-auto">
-                  {JSON.stringify(sub.termsAcceptance.checkboxResponses, null, 2)}
-                </pre>
+                <TermsAcceptanceDetail 
+                  checkboxResponses={sub.termsAcceptance.checkboxResponses} 
+                  className="mt-4"
+                />
               </div>
             ) : (
               <p className="text-[#555] text-sm italic">No terms acceptance on record.</p>
@@ -201,12 +204,12 @@ export default async function SubscriberDetailPage({ params }: { params: { id: s
             <h3 className="font-display font-bold text-base uppercase tracking-widest mb-2">Timeline</h3>
             <div>
               <p className="text-[10px] text-[#555] uppercase tracking-widest font-bold mb-1">Applied</p>
-              <p className="text-sm text-[#A0A0A0]">{new Date(sub.createdAt).toLocaleDateString()}</p>
+              <p className="text-sm text-[#A0A0A0]">{formatDate(sub.createdAt)}</p>
             </div>
             {sub.approvedAt && (
               <div>
                 <p className="text-[10px] text-[#555] uppercase tracking-widest font-bold mb-1">Approved</p>
-                <p className="text-sm text-emerald-400">{new Date(sub.approvedAt).toLocaleDateString()}</p>
+                <p className="text-sm text-emerald-400">{formatDate(sub.approvedAt)}</p>
               </div>
             )}
           </div>

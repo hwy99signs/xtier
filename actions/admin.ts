@@ -173,3 +173,46 @@ export async function publishTermsVersion(title: string, content: string, versio
   revalidatePath('/admin/terms');
   return { success: true };
 }
+
+// ─── Service Zone Actions ─────────────────────────────────────────────────────
+export async function updateServiceZone(id: string, data: any) {
+  await requireAdminSession();
+  const previous = await prisma.serviceZone.findUnique({ where: { id } });
+  await prisma.serviceZone.update({ where: { id }, data });
+  await writeAuditLog({
+    action: 'UPDATE_SERVICE_ZONE',
+    targetEntity: 'ServiceZone',
+    targetId: id,
+    previousData: previous as any,
+    newData: data,
+  });
+  revalidatePath('/admin/zones');
+  return { success: true };
+}
+
+export async function createServiceZone(data: any) {
+  await requireAdminSession();
+  const newZone = await prisma.serviceZone.create({ data });
+  await writeAuditLog({
+    action: 'CREATE_SERVICE_ZONE',
+    targetEntity: 'ServiceZone',
+    targetId: newZone.id,
+    newData: data,
+  });
+  revalidatePath('/admin/zones');
+  return { success: true, id: newZone.id };
+}
+
+// ─── Pricing Actions (Extension) ──────────────────────────────────────────────
+export async function createPricingRule(data: any) {
+  await requireAdminSession();
+  const newRule = await prisma.pricingRule.create({ data });
+  await writeAuditLog({
+    action: 'CREATE_PRICING_RULE',
+    targetEntity: 'PricingRule',
+    targetId: newRule.id,
+    newData: data,
+  });
+  revalidatePath('/admin/pricing');
+  return { success: true, id: newRule.id };
+}
