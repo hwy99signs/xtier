@@ -18,10 +18,10 @@ export const Logo: React.FC<LogoProps> = ({
   return (
     <div className={cn('relative flex items-center justify-start', className)}>
       <Image
-        src="/logo.jpg"
-        alt="ERANTT TRANSIT Logo"
-        width={300}
-        height={100}
+        src="/logo.png"
+        alt="xtier Logo"
+        width={500}
+        height={180}
         className="object-contain w-auto h-full"
         priority
       />

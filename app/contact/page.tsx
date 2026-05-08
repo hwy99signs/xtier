@@ -30,7 +30,7 @@ export default function ContactPage() {
                     </div>
                     <div>
                       <p className="text-[10px] text-white/40 uppercase tracking-[0.2em] mb-1 font-bold">Concierge Line</p>
-                      <p className="text-white font-bold group-hover:text-[#D4AF37] transition-colors">(832) 555-ERANTT</p>
+                      <p className="text-white font-bold group-hover:text-[#D4AF37] transition-colors">(832) 555-XTIER</p>
                     </div>
                   </div>
 
@@ -40,7 +40,7 @@ export default function ContactPage() {
                     </div>
                     <div>
                       <p className="text-[10px] text-white/40 uppercase tracking-[0.2em] mb-1 font-bold">Executive Email</p>
-                      <p className="text-white font-bold group-hover:text-[#D4AF37] transition-colors">service@erantt-transit.com</p>
+                      <p className="text-white font-bold group-hover:text-[#D4AF37] transition-colors">service@xtier.com</p>
                     </div>
                   </div>
 

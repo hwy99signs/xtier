@@ -38,7 +38,7 @@ import { getMockDistance } from './maps';
  */
 export function estimateDistance(pickupZip: string): number {
   if (!process.env.GOOGLE_MAPS_API_KEY && process.env.NODE_ENV === 'production') {
-    console.warn('[ERANTT TRANSIT] GOOGLE_MAPS_API_KEY is missing. Using ZIP fallback.');
+    console.warn('[xtier] GOOGLE_MAPS_API_KEY is missing. Using ZIP fallback.');
   }
 
   return getMockDistance(pickupZip);

@@ -30,7 +30,7 @@ export default async function AdminAuditLogsPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-display font-bold">Audit Log</h1>
-          <p className="text-[#A0A0A0] text-sm mt-1">Immutable record of all administrative actions across ERANTT TRANSIT.</p>
+          <p className="text-[#A0A0A0] text-sm mt-1">Immutable record of all administrative actions across xtier.</p>
         </div>
         <div className="flex items-center gap-2 px-4 py-2 bg-[#D4AF37]/10 border border-[#D4AF37]/20 rounded-xl">
           <Shield size={14} className="text-[#D4AF37]" />

@@ -39,7 +39,7 @@ export default async function DriverChatPage({ params }: { params: Promise<{ sub
             otherUserId={subscriberId} 
             otherUserName={subscriberUser.firstName}
             initialMessages={messages}
-            otherUserRole="Erantt Member"
+            otherUserRole="xtier Member"
             backHref="/drivers/dashboard"
           />
         </div>

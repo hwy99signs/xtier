@@ -125,7 +125,7 @@ export default function DriverPage() {
           </div>
           
           <p className="text-center mt-10 text-[10px] text-[#444] uppercase tracking-[0.4em] font-bold">
-            ERANTT TRANSIT · Partner Recruitment Portal
+            xtier · Partner Recruitment Portal
           </p>
         </div>
       </div>
@@ -140,7 +140,7 @@ export default function DriverPage() {
             <h1 className="section-title text-4xl mb-4 text-center">Join the Elite</h1>
             <div className="gold-line" />
             <p className="section-subtitle mx-auto">
-              Become part of the ERANTT TRANSIT professional fleet. We hire only the most reliable, professional, and safety-conscious executive drivers.
+              Become part of the xtier professional fleet. We hire only the most reliable, professional, and safety-conscious executive drivers.
             </p>
           </div>
 
@@ -267,7 +267,7 @@ export default function DriverPage() {
                   
                   <label className="checkbox-wrapper">
                     <input type="checkbox" {...register('backgroundCheckAccepted')} />
-                    <span className="text-sm">I authorize ERANTT TRANSIT to perform an exhaustive background and criminal check.</span>
+                    <span className="text-sm">I authorize xtier to perform an exhaustive background and criminal check.</span>
                   </label>
 
                   <label className="checkbox-wrapper">

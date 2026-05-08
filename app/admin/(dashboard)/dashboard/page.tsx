@@ -57,7 +57,7 @@ export default async function AdminDashboardPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-display font-bold tracking-tight">Logistics Oversight</h1>
-          <p className="text-[#A0A0A0] text-sm mt-1">ERANTT TRANSIT operational command center.</p>
+          <p className="text-[#A0A0A0] text-sm mt-1">xtier operational command center.</p>
         </div>
         <Link href="/admin/subscribers" className="btn-gold text-xs py-2.5 px-6">
           Review Pending Applications

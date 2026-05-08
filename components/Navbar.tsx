@@ -22,7 +22,7 @@ export default function Navbar() {
   // Hide the public navbar on all portal pages — they have their own headers
   const isPortalPage =
     pathname.startsWith('/dashboard') ||
-    pathname.startsWith('/drivers') ||
+    pathname.startsWith('/drivers/') ||
     pathname.startsWith('/admin') ||
     pathname === '/login';
 
@@ -45,7 +45,7 @@ export default function Navbar() {
     >
       <div className="container-max flex items-center justify-between px-6">
         <Link href="/" className="flex items-center">
-          <Logo variant="full" className="h-8 md:h-10 transition-all duration-300" />
+          <Logo variant="full" className="h-28 md:h-52 transition-all duration-300 hover:scale-105 active:scale-95" />
         </Link>
 
         {/* Desktop Links */}

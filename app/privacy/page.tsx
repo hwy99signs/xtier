@@ -7,7 +7,7 @@ export default function PrivacyPage() {
     {
       icon: <Lock className="text-[#D4AF37]" />,
       title: "1. Data Collection & Ethics",
-      content: "ERANTT TRANSIT collects only the data necessary to provide safe, reliable, and premium transportation. This includes name, contact details, employer information (for corridor verification), and precise route requirements. We do not participate in broader data brokerage markets."
+      content: "xtier collects only the data necessary to provide safe, reliable, and premium transportation. This includes name, contact details, employer information (for corridor verification), and precise route requirements. We do not participate in broader data brokerage markets."
     },
     {
       icon: <Eye className="text-[#D4AF37]" />,
@@ -90,7 +90,7 @@ export default function PrivacyPage() {
                  Direct Privacy Inquiries to:
                </p>
                <p className="text-[#D4AF37] font-bold text-xs">
-                 privacy@erantt-transit.com
+                 privacy@xtier-transit.com
                </p>
              </div>
           </div>

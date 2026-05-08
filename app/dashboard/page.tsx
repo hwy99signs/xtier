@@ -93,7 +93,7 @@ export default async function MemberDashboard() {
         <Link href="/" className="flex items-center gap-3">
           <Logo variant="mark" className="h-8" />
           <div>
-            <span className="font-display font-bold text-sm tracking-wider text-white block leading-none">ERANTT</span>
+            <span className="font-display font-bold text-sm tracking-wider text-white block leading-none">xtier</span>
             <span className="text-[9px] text-[#D4AF37] font-bold tracking-[0.3em] uppercase">Member Portal</span>
           </div>
         </Link>
@@ -114,7 +114,7 @@ export default async function MemberDashboard() {
           <h1 className="text-3xl font-display font-bold text-white">
             Welcome, {session.user.name?.split(' ')[0]}
           </h1>
-          <p className="text-[#A0A0A0] text-sm mt-1">Your ERANTT TRANSIT member dashboard.</p>
+          <p className="text-[#A0A0A0] text-sm mt-1">Your xtier member dashboard.</p>
         </div>
 
         {/* Status Banner */}

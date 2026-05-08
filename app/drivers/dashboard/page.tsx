@@ -102,7 +102,7 @@ export default async function DriverDashboard() {
         <Link href="/" className="flex items-center gap-3">
           <Logo variant="mark" className="h-8" />
           <div>
-            <span className="font-display font-bold text-sm tracking-wider text-white block leading-none">ERANTT</span>
+            <span className="font-display font-bold text-sm tracking-wider text-white block leading-none">xtier</span>
             <span className="text-[9px] text-[#D4AF37] font-bold tracking-[0.3em] uppercase">Driver Portal</span>
           </div>
         </Link>
@@ -146,7 +146,7 @@ export default async function DriverDashboard() {
                   <p className={cn('font-bold text-sm uppercase tracking-widest', sc.color)}>{sc.label}</p>
                   <p className="text-[#A0A0A0] text-xs mt-1">
                     {driver.status === 'PENDING_REVIEW' 
-                      ? "The Erantt Review Board is currently validating your application. We will contact you shortly."
+                      ? "The xtier Review Board is currently validating your application. We will contact you shortly."
                       : driver.isAvailable ? "Receiving route updates. Your system is live." : "System set to offline. Resume to receive trips."}
                   </p>
                 </div>

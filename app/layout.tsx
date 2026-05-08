@@ -4,13 +4,12 @@ import Footer from '@/components/Footer'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'ERANTT TRANSIT — Premium Airport Transportation | Kingwood to IAH',
+  title: 'xtier — Premium Executive Transit | Kingwood to IAH',
   description:
     'Executive airport transportation service connecting Kingwood and the surrounding area to George Bush Intercontinental Airport (IAH). Fixed-route, fixed pricing. Book your seat today.',
   keywords: 'Kingwood airport shuttle, IAH transportation, Kingwood to IAH, executive transit, airport car service',
   openGraph: {
-    title: 'ERANTT TRANSIT — Executive Airport Transportation',
-    description: 'Premium fixed-route transportation from Kingwood to IAH.',
+    description: 'Premium fixed-route transportation from Kingwood to IAH with xtier.',
     type: 'website',
   },
   icons: {

@@ -20,7 +20,7 @@ export const MOCK_USERS = [
     firstName: 'Jane',
   },
   {
-    email: 'admin@erantt-transit.com',
+    email: 'admin@xtier-transit.com',
     password: 'AdminPass123!',
     role: 'ADMIN',
     name: 'System Administrator',

@@ -42,7 +42,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   const session = await auth();
 
   if (!session?.user || session.user.role !== 'ADMIN') {
-    redirect('/login');
+    redirect('/admin');
   }
 
   return (
@@ -50,13 +50,9 @@ export default async function AdminLayout({ children }: { children: React.ReactN
       {/* ── Sidebar ──────────────────────────────────────────────────── */}
       <aside className="w-64 border-r border-[#1a1a1a] bg-[#080808] flex flex-col fixed h-full z-30">
         {/* Logo */}
-        <div className="px-6 pt-8 pb-6 border-b border-[#1a1a1a]">
-          <Link href="/admin/dashboard" className="flex items-center gap-3">
-            <Logo variant="mark" className="h-8" />
-            <div>
-              <span className="font-display font-bold text-base tracking-wider text-white block">ERANTT</span>
-              <span className="text-[10px] text-[#D4AF37] font-bold tracking-[0.3em] uppercase">Admin Portal</span>
-            </div>
+        <div className="px-4 pt-8 pb-6 border-b border-[#1a1a1a]">
+          <Link href="/admin/dashboard" className="flex items-center justify-center">
+            <Logo variant="full" className="h-20" />
           </Link>
         </div>
 

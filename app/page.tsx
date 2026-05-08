@@ -68,7 +68,7 @@ export default function HomePage() {
                 <div className="text-center">
                    <div className="gold-line w-12 h-1 bg-gradient-gold mx-auto mb-6" />
                    <p className="italic font-display text-2xl text-white/90 leading-relaxed">
-                    "Precision scheduling meets unparalleled comfort. ERANTT TRANSIT redefined my airport arrivals."
+                    "Precision scheduling meets unparalleled comfort. xtier redefined my airport arrivals."
                    </p>
                    <p className="mt-6 text-[#D4AF37] font-bold tracking-widest text-sm uppercase">
                     Premium Member Experience
@@ -174,7 +174,7 @@ export default function HomePage() {
             </div>
             <h2 className="section-title mb-6 text-left">Controlled Stage-Based Rollout</h2>
             <p className="text-[#A0A0A0] leading-relaxed mb-8">
-              To maintain our uncompromising standard of reliability, ERANTT TRANSIT expands using a strict density-first model. We do not open new corridors until existing routes reach 100% operational stability.
+              To maintain our uncompromising standard of reliability, xtier expands using a strict density-first model. We do not open new corridors until existing routes reach 100% operational stability.
             </p>
             <div className="space-y-6">
               <div className="flex gap-4 items-center">

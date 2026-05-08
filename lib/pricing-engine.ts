@@ -12,7 +12,7 @@ export interface PricingBreakdown {
 }
 
 /**
- * ERANTT TRANSIT — Pricing Engine
+ * xtier — Pricing Engine
  * Matches distance to zones and applies pricing rules.
  */
 export async function calculateDetailedPricing(

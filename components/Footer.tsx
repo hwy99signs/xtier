@@ -30,7 +30,7 @@ export default function Footer() {
   // Hide the public footer on all portal/auth pages
   const isPortalPage =
     pathname.startsWith('/dashboard') ||
-    pathname.startsWith('/drivers') ||
+    pathname.startsWith('/drivers/') ||
     pathname.startsWith('/admin') ||
     pathname === '/login';
 
@@ -44,9 +44,7 @@ export default function Footer() {
              <Link href="/" className="mb-6 inline-block">
               <Logo variant="full" className="h-10" />
             </Link>
-             <p className="text-[#A0A0A0] text-base leading-relaxed mb-8">
-              Premium executive transportation connecting Kingwood and George Bush Intercontinental Airport with elite service and reliability. Operated by ERANTT TRANSIT.
-            </p>
+              Premium executive transportation connecting Kingwood and George Bush Intercontinental Airport with elite service and reliability. Operated by xtier.
             <div className="flex items-center gap-4">
               <Link href="#" className="p-2 rounded-full border border-[#222222] text-[#A0A0A0] hover:text-[#D4AF37] hover:border-[#D4AF37] transition-all">
                 <InstagramIcon size={18} />
@@ -79,11 +77,11 @@ export default function Footer() {
               </li>
               <li className="flex items-center gap-3 text-[#A0A0A0] text-[15px]">
                 <Phone className="text-[#D4AF37] shrink-0" size={18} />
-                <span>(832) 555-ERANTT-TRANSIT</span>
+                <span>(832) 555-XTIER</span>
               </li>
               <li className="flex items-center gap-3 text-[#A0A0A0] text-[15px]">
                 <Mail className="text-[#D4AF37] shrink-0" size={18} />
-                <span>service@erantt-transit.com</span>
+                <span>service@xtier.com</span>
               </li>
             </ul>
           </div>
@@ -103,7 +101,7 @@ export default function Footer() {
         </div>
 
         <div className="pt-8 border-t border-[#222222] flex flex-col md:flex-row items-center justify-between gap-4 text-[#666666] text-sm">
-          <p>© {new Date().getFullYear()} ERANTT TRANSIT Services LLC. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} xtier Services LLC. All rights reserved.</p>
           <div className="flex items-center gap-6">
             <Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
             <Link href="/terms" className="hover:text-white transition-colors">Terms & Conditions</Link>

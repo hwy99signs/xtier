@@ -37,7 +37,7 @@ export async function getOrCreateStripeCustomer(email: string, name: string) {
     email,
     name,
     metadata: {
-      source: 'ERANTT TRANSIT',
+      source: 'xtier',
     },
   });
 }

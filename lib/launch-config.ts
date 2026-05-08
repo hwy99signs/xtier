@@ -3,7 +3,7 @@ export const launchConfig = {
     badge: "Stage 1: Executive Corridor Network",
     title: "Predictable. Disciplined.",
     titleHighlight: "Paramount.",
-    subtitle: "ERANTT TRANSIT is a specialized commuter network, not a rideshare application. We provide structured, premium transit on fixed corridors with dedicated chauffeur assignments, delivering unwavering punctuality for the discerning executive.",
+    subtitle: "xtier is a specialized commuter network, not a rideshare application. We provide structured, premium transit on fixed corridors with dedicated chauffeur assignments, delivering unwavering punctuality for the discerning executive.",
     primaryRoute: "Active Corridor: Kingwood ↔ IAH",
   },
   stats: [

@@ -6,7 +6,7 @@ async function main() {
   console.log('Seeding database...');
 
   // 1. Create default ADMIN user
-  const adminEmail = process.env.ADMIN_EMAIL || 'admin@erantt-transit.com';
+  const adminEmail = process.env.ADMIN_EMAIL || 'admin@xtier.com';
   const adminPassword = process.env.ADMIN_PASSWORD || 'AdminPass123!';
   const hashedPassword = await bcrypt.hash(adminPassword, 10);
 
@@ -80,10 +80,10 @@ async function main() {
   const terms = await prisma.termsVersion.create({
     data: {
       version: 'v1.0',
-      title: 'ERANTT TRANSIT Executive Service Agreement',
+      title: 'xtier Executive Service Agreement',
       content: `
         1. Executive Master Agreement
-        This agreement governs the use of ERANTT TRANSIT services...
+        This agreement governs the use of xtier services...
         2. Cancellation & No-Show Policy
         Cancellations made less than 12 hours before...
         3. Service Limitations

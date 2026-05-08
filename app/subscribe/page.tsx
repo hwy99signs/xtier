@@ -160,7 +160,7 @@ export default function SubscribePage() {
           </div>
           
           <p className="text-center mt-10 text-[10px] text-[#444] uppercase tracking-[0.4em] font-bold">
-            ERANTT TRANSIT · Secure Submission Terminal
+            xtier · Secure Submission Terminal
           </p>
         </div>
       </div>
@@ -350,7 +350,7 @@ export default function SubscribePage() {
                            <p><span className="text-amber-500 uppercase text-[10px] font-bold block">Destination:</span> {watch('dropoffAddress') || '[Enter Address]'}, {watch('dropoffZip')}</p>
                         </div>
                         <p className="text-white-dim text-sm leading-relaxed max-w-lg">
-                          ERANTT TRANSIT currently only operates the <span className="text-amber-500 font-bold underline">Kingwood ↔ IAH</span> direct-line route. 
+                          xtier currently only operates the <span className="text-amber-500 font-bold underline">Kingwood ↔ IAH</span> direct-line route. 
                           Your request will be added to our expansion waitlist for your specific corridor.
                         </p>
                       </div>
@@ -428,7 +428,7 @@ export default function SubscribePage() {
 
               <div className="space-y-4 max-w-2xl">
                 <p className="text-sm text-[#A0A0A0] mb-6">
-                  To proceed with your ERANTT TRANSIT subscription, you must read and manually acknowledge the following executive policies. 
+                  To proceed with your xtier subscription, you must read and manually acknowledge the following executive policies. 
                   <span className="text-[#D4AF37] block mt-1">Reviewing each clause is mandatory before submission.</span>
                 </p>
 
@@ -474,7 +474,7 @@ export default function SubscribePage() {
                   
                   <label className="checkbox-wrapper">
                     <input type="checkbox" {...register('commuterAgreementAccepted')} />
-                    <span className="text-sm">I acknowledge ERANTT TRANSIT is a <span className="text-[#D4AF37] font-bold">strictly fixed-line corridor service</span>, not a dynamic rideshare provider.</span>
+                    <span className="text-sm">I acknowledge xtier is a <span className="text-[#D4AF37] font-bold">strictly fixed-line corridor service</span>, not a dynamic rideshare provider.</span>
                   </label>
                 </div>
               </div>

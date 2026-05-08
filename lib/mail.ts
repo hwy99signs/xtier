@@ -1,5 +1,5 @@
 /**
- * ERANTT TRANSIT — Email Service Abstraction
+ * xtier — Email Service Abstraction
  * Implements a provider-based system to switch between Mock and Resend.
  */
 

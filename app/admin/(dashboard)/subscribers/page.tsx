@@ -30,7 +30,7 @@ export default async function AdminSubscribersPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-display font-bold">Member Directory</h1>
-          <p className="text-[#A0A0A0] text-sm mt-1">Manage and audit ERANTT TRANSIT subscriber applications.</p>
+          <p className="text-[#A0A0A0] text-sm mt-1">Manage and audit xtier subscriber applications.</p>
         </div>
         <div className="flex gap-4">
           <div className="flex items-center gap-4 bg-black/40 border border-[#222222] px-4 py-2 rounded-xl">

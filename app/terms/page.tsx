@@ -7,7 +7,7 @@ export default function TermsPage() {
     {
       icon: <Scale className="text-[#D4AF37]" />,
       title: "1. Executive Master Agreement",
-      content: "This agreement governs the use of ERANTT TRANSIT services. By utilizing our platform, you acknowledge that ERANTT TRANSIT is a structured, pre-scheduled executive commuter provider. We ARE NOT a dynamic rideshare service (like Uber/Lyft). Our business model is built on fixed-route density and manual logistics verification. All membership applications and route requests are subject to manual audit and executive approval."
+      content: "This agreement governs the use of xtier services. By utilizing our platform, you acknowledge that xtier is a structured, pre-scheduled executive commuter provider. We ARE NOT a dynamic rideshare service (like Uber/Lyft). Our business model is built on fixed-route density and manual logistics verification. All membership applications and route requests are subject to manual audit and executive approval."
     },
     {
       icon: <Clock className="text-[#D4AF37]" />,
@@ -17,12 +17,12 @@ export default function TermsPage() {
     {
       icon: <AlertTriangle className="text-[#D4AF37]" />,
       title: "3. Cancellation & Refund Policy",
-      content: "Our infrastructure is pre-allocated based on scheduled demand. Cancellations made within 24 hours of the scheduled pickup are non-refundable. Cancellations made outside this window will be credited to your account for future use. Direct cash refunds are only issued if ERANTT TRANSIT fails to provide a vehicle within 30 minutes of the scheduled time due to internal fleet failure."
+      content: "Our infrastructure is pre-allocated based on scheduled demand. Cancellations made within 24 hours of the scheduled pickup are non-refundable. Cancellations made outside this window will be credited to your account for future use. Direct cash refunds are only issued if xtier fails to provide a vehicle within 30 minutes of the scheduled time due to internal fleet failure."
     },
     {
       icon: <Shield className="text-[#D4AF37]" />,
       title: "4. Service Corridor Limitations",
-      content: "ERANTT TRANSIT operates exclusively within defined transit corridors (primarily Kingwood ↔ IAH). We do not accept 'off-route' destination requests. If your residence or destination is outside our active Service Zones, your application will be waitlisted until corridor density allows for expansion."
+      content: "xtier operates exclusively within defined transit corridors (primarily Kingwood ↔ IAH). We do not accept 'off-route' destination requests. If your residence or destination is outside our active Service Zones, your application will be waitlisted until corridor density allows for expansion."
     },
     {
       icon: <FileText className="text-[#D4AF37]" />,
@@ -32,7 +32,7 @@ export default function TermsPage() {
     {
       icon: <UserCheck className="text-[#D4AF37]" />,
       title: "6. Passenger Conduct Code",
-      content: "ERANTT TRANSIT maintains an executive environment. Smoking, vaping, and loud audio are strictly prohibited. Chauffeurs reserve the right to terminate any transit without refund if a passenger becomes verbally or physically abusive, or if their behavior compromises the safety of the vehicle."
+      content: "xtier maintains an executive environment. Smoking, vaping, and loud audio are strictly prohibited. Chauffeurs reserve the right to terminate any transit without refund if a passenger becomes verbally or physically abusive, or if their behavior compromises the safety of the vehicle."
     },
     {
       icon: <Lock className="text-[#D4AF37]" />,
@@ -88,12 +88,12 @@ export default function TermsPage() {
           <div className="mt-16 p-10 bg-black/40 border border-[#222] rounded-3xl text-center relative overflow-hidden">
              <div className="absolute inset-0 bg-[#D4AF37]/5 blur-[100px] pointer-events-none" />
              <p className="text-white-dim text-sm md:text-base italic relative z-10 leading-loose">
-               "Membership in ERANTT TRANSIT is a privilege granted upon executive review. Use of our services constitutes irrevocable acceptance of these professional standards and logistics protocols."
+               "Membership in xtier is a privilege granted upon executive review. Use of our services constitutes irrevocable acceptance of these professional standards and logistics protocols."
              </p>
              <div className="mt-8 flex flex-col items-center gap-4 relative z-10">
                <div className="h-[1px] w-20 bg-[#D4AF37]/50" />
                <p className="text-[#D4AF37] font-bold text-[10px] uppercase tracking-[0.5em]">
-                 ERANTT TRANSIT · Compliance Authority
+                 xtier · Compliance Authority
                </p>
              </div>
           </div>

@@ -8,7 +8,7 @@ const DEFAULT_SETTINGS = [
   { key: 'SERVICE_AREA', label: 'Service Area Description', groupKey: 'operations', defaultValue: 'Kingwood, TX and surrounding Humble/Atascocita zones' },
   { key: 'LAUNCH_STATUS', label: 'Launch Status', groupKey: 'operations', defaultValue: 'STAGE_1_OPEN' },
   { key: 'MAX_ROUTE_CAPACITY', label: 'Max Riders Per Route', groupKey: 'operations', defaultValue: '6' },
-  { key: 'NOTIFICATION_EMAIL', label: 'Admin Notification Email', groupKey: 'notifications', defaultValue: 'ops@erantt-transit.com' },
+  { key: 'NOTIFICATION_EMAIL', label: 'Admin Notification Email', groupKey: 'notifications', defaultValue: 'ops@xtier-transit.com' },
   { key: 'ALERT_ON_NEW_APPLICATION', label: 'Alert on New Application', groupKey: 'notifications', defaultValue: 'true' },
   { key: 'WEEKLY_BILLING_DAY', label: 'Weekly Billing Day', groupKey: 'billing', defaultValue: 'MONDAY' },
   { key: 'COMMITMENT_DEPOSIT_PCT', label: 'Commitment Deposit %', groupKey: 'billing', defaultValue: '20' },
@@ -34,7 +34,7 @@ export default async function AdminSettingsPage() {
     <div className="space-y-8">
       <div>
         <h1 className="text-3xl font-display font-bold">System Settings</h1>
-        <p className="text-[#A0A0A0] text-sm mt-1">Configure ERANTT TRANSIT operational parameters and launch controls.</p>
+        <p className="text-[#A0A0A0] text-sm mt-1">Configure xtier operational parameters and launch controls.</p>
       </div>
 
       {Object.entries(groups).map(([groupKey, items]) => {
